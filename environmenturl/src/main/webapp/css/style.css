@@ -1,0 +1,65 @@
+.error {
+	padding: 15px;
+	margin-bottom: 20px;
+	border: 1px solid transparent;
+	border-radius: 4px;
+	color: #a94442;
+	background-color: #f2dede;
+	border-color: #ebccd1;
+}
+ 
+.msg {
+	padding: 15px;
+	margin-bottom: 20px;
+	border: 1px solid transparent;
+	border-radius: 4px;
+	color: #31708f;
+	background-color: #d9edf7;
+	border-color: #bce8f1;
+}
+ 
+#login-box {
+	width: auto;
+	padding: 20px;
+	margin: 100px auto;
+	background: #fff;
+	-webkit-border-radius: 2px;
+	-moz-border-radius: 2px;
+	border: 1px solid #000;
+	background-color : #c1dad7;
+	display: table;
+}
+
+
+<!-- Added Later -->
+.dataTable thead tr {
+    background: none repeat scroll 0 0 #3598DB;    
+    width: 100%;	
+}
+.dataTable thead th{color: black; font-size: 14px; font-weight: bold;padding: 10px 0; text-align: center; backgroud:#3598db;}
+.dataTable tbody tr{}
+.th span{ color: #FFFFFF; display: inline; font-size: 13px; font-weight: bold; text-align: right; display: inline-block; margin: 0; padding: 0;}
+.dataTable{width: 100%;}
+.dataTable .btn {padding: 3px 10px; margin-right: 30px;}
+.dataTable div {padding: 0 0 8px;}
+/* .dataTable .odd {background-color: #D4EAF8;} */
+.dataTable div *{display: inline;}
+.dataTable tbody tr td p{	
+    display: table;
+    height: auto;
+    margin: 0 10px;
+    position: relative;    
+    width: 160px;
+	word-break: break-all;
+}
+.dataTable tbody tr td p img{width: 130px; height: 97px; word-break: break-all;}
+.dataTable tbody tr td.origTitle p, .dispTitle{    
+	color: #666666;
+    line-height: 18px;
+    text-align: center;
+    width: 180px;
+	height: auto;
+	font-size: 12px;
+}
+.dataTable tr td{vertical-align: middle; padding: 10px 0;}
+.dataTable tr:nth-child(even){background: #c1dad7;} 

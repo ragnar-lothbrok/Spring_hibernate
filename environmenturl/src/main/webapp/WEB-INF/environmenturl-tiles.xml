@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE tiles-definitions PUBLIC  
+        "-//Apache Software Foundation//DTD Tiles Configuration 3.0//EN"  
+        "http://tiles.apache.org/dtds/tiles-config_3_0.dtd">
+<tiles-definitions>
+ 	<definition name="environmenturl_base_layout" template="/jsp/tiles_layout.jsp">
+ 		<put-attribute name="body1" value="" />
+		<put-attribute name="body2" value="" />
+		<put-attribute name="body3" value="" />
+		<put-list-attribute name="styles" inherit="true">
+			<add-attribute value="style.css" />
+		</put-list-attribute>
+		<put-list-attribute name="scripts" inherit="true">
+    		<add-attribute value="script.js" />
+    		<add-attribute value="jquery.dataTables.min.js" />
+    		<add-attribute value="jquery-1.9.1.js" />
+    		<add-attribute value="jquery-ui.js" />
+    		<add-attribute value="customer_care.js" />
+  		</put-list-attribute>
+ 	</definition>
+ 	
+ 	<definition name="tool_menu" extends="environmenturl_base_layout">
+ 		<put-attribute name="body1" value="/jsp/allproductlinks.jsp" />
+ 	</definition>
+ 	
+ 	<definition name="showConfigData" extends="environmenturl_base_layout">
+		<put-attribute name="body1" value="/jsp/configDataDetails.jsp" />
+ 		<put-attribute name="body2" value="/jsp/addConfigData.jsp" />
+ 	</definition>
+ 	
+ 	
+ 	<definition name="showTomcatDetails" extends="environmenturl_base_layout">
+ 		<put-attribute name="body1" value="/jsp/tomcat_data_details.jsp" />
+		<put-attribute name="body2" value="/jsp/addTomcatData.jsp" />
+ 	</definition>
+ 	
+ 	<definition name="showURLDetails" extends="environmenturl_base_layout">
+ 		<put-attribute name="body1" value="/jsp/url_data_details.jsp" />
+		<put-attribute name="body2" value="/jsp/addUrl.jsp" />
+ 	</definition>
+ 	
+ 	<definition name="databasecredentialData" extends="environmenturl_base_layout">
+ 		<put-attribute name="body1" value="/jsp/databaseCredentialDataDetails.jsp" />
+		<put-attribute name="body2" value="/jsp/addDatabaseCredentialData.jsp" />
+ 	</definition>
+ 	
+ 	<definition name="showmsisdndetail" extends="environmenturl_base_layout">
+ 		<put-attribute name="body1" value="/jsp/msisdndetails.jsp" />
+		<put-attribute name="body2" value="/jsp/showmsisdndetail.jsp" />
+ 	</definition>
+ 	
+ 	<definition name="upload_file" extends="environmenturl_base_layout">
+ 		<put-attribute name="body1" value="/jsp/upload.jsp" />
+		<put-attribute name="body2" value="" />
+ 	</definition>
+ 	
+ 	<definition name="errorTomcatData" extends="showTomcatDetails"/>
+ 	
+ 	<definition name="errorURLData" extends="showURLDetails"/>
+ 	
+ 	<definition name="errorConfigData" extends="showConfigData"/>
+ 	
+ 	<definition name="errorDatbaseCredential" extends="databasecredentialData"/>
+ 	
+</tiles-definitions>

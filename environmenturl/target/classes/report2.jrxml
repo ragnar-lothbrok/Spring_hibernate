@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="report2" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="b955bafd-7f41-449a-b75a-ecf5bc3a0fef">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<field name="envName" class="java.lang.String"/>
+	<field name="projectName" class="java.lang.String"/>
+	<field name="moduleName" class="java.lang.String"/>
+	<field name="moduleLink" class="java.lang.String"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="79" splitType="Stretch"/>
+	</title>
+	<pageHeader>
+		<band height="35" splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band height="61" splitType="Stretch"/>
+	</columnHeader>
+	<detail>
+		<band height="125" splitType="Stretch">
+			<textField>
+				<reportElement x="410" y="105" width="100" height="20" uuid="145ff0b7-41fa-41d0-8604-470597e9e3ba"/>
+				<textFieldExpression><![CDATA[$F{moduleLink}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="246" y="105" width="100" height="20" uuid="14095b9f-bd8c-4e91-9b73-3b17ade17aaf"/>
+				<textFieldExpression><![CDATA[$F{moduleName}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="114" y="105" width="100" height="20" uuid="9b7fe1ba-9c45-4bb4-80a0-e86e62fa1703"/>
+				<textFieldExpression><![CDATA[$F{projectName}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="0" y="105" width="100" height="20" uuid="826d873d-39d5-4fa6-8d29-a4bfdc2cf45a"/>
+				<textFieldExpression><![CDATA[$F{envName}]]></textFieldExpression>
+			</textField>
+			<frame>
+				<reportElement x="0" y="105" width="510" height="20" uuid="44ce6c6c-20e5-40ba-a4c2-c7f8544ddcde"/>
+			</frame>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="45" splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="54" splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band height="42" splitType="Stretch"/>
+	</summary>
+</jasperReport>

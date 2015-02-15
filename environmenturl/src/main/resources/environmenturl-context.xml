@@ -1,0 +1,228 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- If we don't want to use environmenturl-context.xml than we can use environmenturl-servlet.xml 
+	and also with that we don't have to use ContextloaderListener -->
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:util="http://www.springframework.org/schema/util" xmlns:mvc="http://www.springframework.org/schema/mvc"
+	xsi:schemaLocation="http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc-3.2.xsd
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.2.xsd
+		http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-3.2.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.2.xsd
+		">
+
+	<import resource="classpath:environmenturl-resources-context.xml" />
+	<!-- <bean id="staticDataController" class="com.controller.StaticDataController" 
+		/> <bean id="tomcatDataController" class="com.controller.TomcatDataController" 
+		/> <bean id="uRLDataController" class="com.controller.URLDataController" 
+		/> <bean id="menuController" class="com.controller.MenuController" /> -->
+
+	<!-- Added because of js/css/images were not visible -->
+	<mvc:annotation-driven />
+
+	<context:component-scan base-package="com.controller" />
+
+	<bean id="activityServiceImpl" class="com.api.ActivityServiceImpl" />
+
+	<bean id="staticDataServiceImpl" class="com.api.StaticDataServiceImpl" />
+
+	<bean id="databaseCredentialImpl" class="com.api.DatabaseCredentialImpl" />
+
+	<bean id="uRLDetailValidator" class="com.validator.URLDetailValidator" />
+
+	<bean id="staticDataValidator" class="com.validator.StaticDataValidator" />
+
+	<bean id="tomcatDataValidator" class="com.validator.TomcatDataValidator" />
+
+	<bean id="databaseCredentialValidator" class="com.validator.DatabaseCredentialValidator" />
+	
+	<bean id="dataUtil" class="com.util.DataUtil" />
+
+	<!-- For PDF -->
+	<import resource="classpath:jasper-views.xml" />
+	<bean class="org.springframework.web.servlet.view.XmlViewResolver">
+		<property name="location" value="classpath:jasper-views.xml" />
+		<property name="order" value="0" />
+	</bean>
+
+
+
+	<!-- <bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource"> 
+		<property name="driverClassName" value="${db.driverClassName}"/> <property 
+		name="url" value="${db.url}"/> <property name="username" value="${db.username}"/> 
+		<property name="password" value="${db.password}"/> </bean> -->
+
+	<bean id="dataSource"
+		class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+		<property name="driverClassName" value="com.mysql.jdbc.Driver" />
+		<property name="url"
+			value="jdbc:mysql://127.0.0.1/environmenturl_db?zeroDateTimeBehavior=convertToNull" />
+		<property name="username" value="root" />
+		<property name="password" value="root" />
+	</bean>
+
+	<bean
+		class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+		<property name="location" value="classpath:database.properties" />
+	</bean>
+
+	<context:property-placeholder
+		location="classpath:environmenturl-config.properties" order="-1"
+		ignore-unresolvable="true" ignore-resource-not-found="true" />
+
+	<!-- <bean class="org.springframework.web.servlet.view.InternalResourceViewResolver"> 
+		<property name="prefix" value="/jsp/" /> <property name="suffix" value=".jsp" 
+		/> </bean> -->
+
+	<bean id="jdbcTemplate" class="org.springframework.jdbc.core.JdbcTemplate">
+		<property name="dataSource" ref="dataSource" />
+	</bean>
+
+	<bean id="viewResolver"
+		class="org.springframework.web.servlet.view.UrlBasedViewResolver">
+		<property name="order" value="1" />
+		<property name="viewClass"
+			value="org.springframework.web.servlet.view.tiles3.TilesView" />
+	</bean>
+
+	<bean id="tilesConfigurer"
+		class="org.springframework.web.servlet.view.tiles3.TilesConfigurer">
+		<property name="definitions">
+			<value>/WEB-INF/environmenturl-tiles.xml</value>
+		</property>
+	</bean>
+
+	<!-- Locale Working -->
+
+	<bean id="messageSource"
+		class="org.springframework.context.support.ReloadableResourceBundleMessageSource">
+		<property name="basename" value="classpath:messages" />
+		<property name="defaultEncoding" value="UTF-8" />
+	</bean>
+
+
+	<bean id="localeResolver"
+		class="org.springframework.web.servlet.i18n.CookieLocaleResolver">
+		<property name="defaultLocale" value="${defaultLocale}" />
+	</bean>
+
+	<!-- Locale Change Identify Working -->
+
+	<bean id="localeChangeInterceptor"
+		class="org.springframework.web.servlet.i18n.LocaleChangeInterceptor">
+		<property name="paramName" value="language" />
+	</bean>
+	<bean id="handlerMapping"
+		class="org.springframework.web.servlet.mvc.annotation.DefaultAnnotationHandlerMapping">
+		<property name="interceptors">
+			<ref bean="localeChangeInterceptor" />
+		</property>
+	</bean>
+
+	<!-- For Web Services -->
+
+	<!-- <wss:binding url="/service/hello"> <wss:service> <ws:service bean="#helloWs"/> 
+		</wss:service> </wss:binding> Web service methods <bean id="helloWs" class="com.service.web.HelloWorldWS"> 
+		<property name="helloWorldBo" ref="HelloWorldBo" /> </bean> <bean id="HelloWorldBo" 
+		class="com.service.impl.HelloWorldBoImpl" /> -->
+
+
+	<!-- For Hibernate -->
+	<bean id="hibernateSupportDAO" class="com.home.persistence.HibernateSupportDAO">
+		<property name="sessionFactory" ref="sessionFactory" />
+	</bean>
+
+
+	<!-- Hibernate SessionFactory -->
+	<bean id="sessionFactory"
+		class="org.springframework.orm.hibernate4.LocalSessionFactoryBean">
+		<property name="dataSource" ref="dataSource" />
+		<property name="configLocation">
+			<value>classpath:hibernate.cfg.xml</value>
+		</property>
+	</bean>
+
+	<!-- <bean id="transactionManager" class="org.springframework.orm.hibernate4.HibernateTransactionManager"> 
+		<property name="sessionFactory" ref="sessionFactory" /> </bean> -->
+
+	<!-- SOAP Web Service -->
+	<!-- http://wsdlbrowser.com/ -->
+	<!-- Define the SOAP version used by the WSDL -->
+	<bean id="soapMessageFactory" class="org.springframework.ws.soap.saaj.SaajSoapMessageFactory">
+		<property name="soapVersion">
+			<util:constant static-field="org.springframework.ws.soap.SoapVersion.SOAP_12" />
+		</property>
+	</bean>
+
+	<!-- The location of the generated Java files -->
+	<bean id="ipMarshaller" class="org.springframework.oxm.jaxb.Jaxb2Marshaller">
+		<property name="contextPath" value="net.wsdl.webservicex" />
+		<property name="marshallerProperties">
+			<map>
+				<entry>
+					<key>
+						<util:constant static-field="javax.xml.bind.Marshaller.JAXB_FORMATTED_OUTPUT" />
+					</key>
+					<value type="java.lang.Boolean">true</value>
+				</entry>
+				<entry>
+					<key>
+						<util:constant static-field="javax.xml.bind.Marshaller.JAXB_ENCODING" />
+					</key>
+					<value type="java.lang.String">UTF-8</value>
+				</entry>
+			</map>
+		</property>
+	</bean>
+
+	<!-- Configure Spring Web Services -->
+	<bean id="webServiceTemplate" class="org.springframework.ws.client.core.WebServiceTemplate">
+		<constructor-arg ref="soapMessageFactory" />
+		<property name="marshaller" ref="ipMarshaller" />
+		<property name="unmarshaller" ref="ipMarshaller" />
+		<property name="defaultUri"
+			value="http://www.webservicex.net/geoipservice.asmx?WSDL" />
+	</bean>
+
+	<bean id="consumerIPService" class="com.service.api.ConsumerIPServiceClient" />
+
+	<!-- Configuring SOAP Web Service 2 -->
+	<!-- The location of the generated Java files -->
+	<bean id="currencyMarshaller" class="org.springframework.oxm.jaxb.Jaxb2Marshaller">
+		<property name="contextPath" value="net.webservicex" />
+		<property name="marshallerProperties">
+			<map>
+				<entry>
+					<key>
+						<util:constant static-field="javax.xml.bind.Marshaller.JAXB_FORMATTED_OUTPUT" />
+					</key>
+					<value type="java.lang.Boolean">true</value>
+				</entry>
+				<entry>
+					<key>
+						<util:constant static-field="javax.xml.bind.Marshaller.JAXB_ENCODING" />
+					</key>
+					<value type="java.lang.String">UTF-8</value>
+				</entry>
+			</map>
+		</property>
+	</bean>
+
+	<!-- Configure Spring Web Services -->
+	<bean id="webServiceTemplate2" class="org.springframework.ws.client.core.WebServiceTemplate">
+		<constructor-arg ref="soapMessageFactory" />
+		<property name="marshaller" ref="currencyMarshaller" />
+		<property name="unmarshaller" ref="currencyMarshaller" />
+		<property name="defaultUri"
+			value="http://www.webservicex.net/CurrencyConvertor.asmx?WSDL" />
+	</bean>
+
+	<bean id="currencyService" class="com.service.api.CurrencyServiceImpl" />
+
+	<!-- <mvc:interceptors>
+		<mvc:interceptor>
+			<mvc:mapping path="/**" />
+			<bean id="sysErrLoggingInterceptor" class="com.service.handlers.SysErrLoggingInterceptor" />
+		</mvc:interceptor>
+	</mvc:interceptors> -->
+
+</beans>
